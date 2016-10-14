@@ -19,7 +19,7 @@ class Map(object):
             raise Exception('y value is illegal')
         self.map[y][x] = value
 
-    def line(self, point0: (int, int), point1: (int, int), color: int):
+    def line(self, point0: (int, int), point1: (int, int), color: int, fill_down=False):
         x0, y0 = point0
         x1, y1 = point1
 
@@ -41,8 +41,14 @@ class Map(object):
         for x in range(x0, x1 + 1):
             if steep:
                 self.set_point(y, x, color)
+                if fill_down:
+                    for row in range(x):
+                        self.set_point(y, row, color)
             else:
                 self.set_point(x, y, color)
+                if fill_down:
+                    for row in range(y):
+                        self.set_point(x, row, color)
 
             error += derror
 
