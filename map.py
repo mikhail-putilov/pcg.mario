@@ -63,5 +63,16 @@ class Map(object):
                 exported.append(','.join([str(x) for x in line]))
             f.write(','.join(exported) + ';background=1;spriteset=1;music=2;timelimit=400\n')
 
+    def make_pitfall(self, start_x):
+        width_of_pitfall = 5
+        for x in range(start_x, start_x + width_of_pitfall):
+            for y in range(self.height):
+                if self.map[y][x] != self.background:
+                    self.map[y][x] = self.background
+                else:
+                    continue
+
+    # def place_cloud(self, start_x):
+
 
 the_map = Map()
