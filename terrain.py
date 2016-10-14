@@ -6,6 +6,12 @@ def generate_terrain(the_map: Map):
     for left_point, right_point in zip(list_of_random_points[:-1], list_of_random_points[1:]):
         the_map.line(left_point, right_point, 2, fill_down=True)
 
-    random_pitfalls_x = [31, 50]
-    for pitfall_x in random_pitfalls_x:
+    random_pitfalls_xs = [31, 50]
+    for pitfall_x in random_pitfalls_xs:
         the_map.make_pitfall(pitfall_x)
+
+
+def generate_clouds(the_map: Map):
+    random_cloud_xs = [31, 50, 100, 0]
+    for cloud_x in random_cloud_xs:
+        the_map.place_cloud(cloud_x, type='red')

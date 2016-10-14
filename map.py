@@ -72,7 +72,23 @@ class Map(object):
                 else:
                     continue
 
-    # def place_cloud(self, start_x):
+    def place_cloud(self, start_x, type='blue'):
+        if type == 'blue':
+            cloud = [
+                [11 + 44, 12 + 44, 13 + 44],
+                [11 + 22, 12 + 22, 13 + 22]
+            ]
+        elif type == 'red':
+            cloud = [
+                [8 + 44, 9 + 44, 10 + 44],
+                [8 + 22, 9 + 22, 10 + 22]
+            ]
+        else:
+            raise Exception('only red or blue are supported')
+        initial_height = 10
+        for y, cloud_row in enumerate(cloud):
+            for x, cloud_val in enumerate(cloud_row):
+                self.map[y + initial_height][x + start_x] = cloud_val
 
 
 the_map = Map()
