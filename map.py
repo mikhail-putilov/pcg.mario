@@ -7,9 +7,10 @@ class Map(object):
         self.width = map_width
         self.height = map_height
         self.background = 1
+        self.ground = 2
         self.map = []
         # fill background
-        for i in range(map_height):
+        for i in range(self.height):
             self.map.append(list(repeat(self.background, self.width)))
 
     def set_point(self, x, y, value):
@@ -89,6 +90,25 @@ class Map(object):
         for y, cloud_row in enumerate(cloud):
             for x, cloud_val in enumerate(cloud_row):
                 self.map[y + initial_height][x + start_x] = cloud_val
+
+    def place_tube(self, tube_x):
+        tube_top = [16, 17]
+        tube_body = [16 + 22, 17 + 22]
+        height_counter = 0
+        max_height = 4
+        for y in range(self.height):
+            lhs = self.map[y][tube_x]
+            rhs = self.map[y][tube_x + 1]
+            if lhs != self.ground:
+                height_counter += 1
+                self.map[y][tube_x] = tube_body[0]
+            if rhs != self.ground:
+                self.map[y][tube_x + 1] = tube_body[1]
+            if height_counter == max_height:
+                self.map[y][tube_x] = tube_top[0]
+                self.map[y][tube_x + 1] = tube_top[1]
+                return
+
 
 
 the_map = Map()
