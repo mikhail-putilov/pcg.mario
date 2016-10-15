@@ -27,3 +27,9 @@ def generate_question_blocks(the_map: Map):
     random_question_xs = [50, 3, 5, 8]
     for random_question_x in random_question_xs:
         the_map.place_question_block(random_question_x)
+
+
+def generate_cave(the_map: Map):
+    random_cave_xss = [(60, 70)]
+    for random_cave_x1, random_cave_x2 in random_cave_xss:
+        the_map.place_cave(random_cave_x1, random_cave_x2)

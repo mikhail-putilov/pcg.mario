@@ -126,5 +126,38 @@ class Map(object):
                [2, 7, 8, 14, 15, 16, 17, 18, 19, 20, 21, 22,
                 1 + 22, 7 + 22, 14 + 22, 15 + 22, 16 + 22, 17 + 22, 18 + 22, 19 + 22, 20 + 22, 21 + 22, 22 + 22]
 
+    def place_cave(self, cave_x1, cave_x2):
+        number_of_rooms = 1
+        width = abs(cave_x2 - cave_x1)
+        way_up_x = int((cave_x1 + cave_x2) / 2)
+        way_up_y = None
+        for y in range(self.height):
+            if not self.is_collider(self.map[y][way_up_x]):
+                way_up_y = y - 1
+                break
+        # dig
+        min_depth = 2
+        current_depth = 0
+        cave_starts_y = None
+        for y in range(way_up_y, 0, -1):
+            current_depth += 1
+            if self.is_cave_placeable(cave_x1, cave_x2, y) and current_depth >= min_depth:
+                cave_starts_y = y
+                for x in range(cave_x1, cave_x2 + 1):
+                    self.map[y][x] = self.background
+
+        for y in range(way_up_y, cave_starts_y, -1):
+            self.map[y][way_up_x] = self.background
+
+    def is_cave_placeable(self, cave_x1, cave_x2, y):
+        for x in range(cave_x1, cave_x2 + 1):
+            if not self.is_collider(self.map[y-1][x]):
+                return False
+            if not self.is_collider(self.map[y][x]):
+                return False
+            if not self.is_collider(self.map[y+1][x]):
+                return False
+        return True
+
 
 the_map = Map()
