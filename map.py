@@ -8,6 +8,7 @@ class Map(object):
         self.height = map_height
         self.background = 1
         self.ground = 2
+        self.question_block = 8
         self.map = []
         # fill background
         for i in range(self.height):
@@ -99,16 +100,31 @@ class Map(object):
         for y in range(self.height):
             lhs = self.map[y][tube_x]
             rhs = self.map[y][tube_x + 1]
-            if lhs != self.ground:
+            if not self.is_collider(lhs):
                 height_counter += 1
                 self.map[y][tube_x] = tube_body[0]
-            if rhs != self.ground:
+            if not self.is_collider(rhs):
                 self.map[y][tube_x + 1] = tube_body[1]
             if height_counter == max_height:
                 self.map[y][tube_x] = tube_top[0]
                 self.map[y][tube_x + 1] = tube_top[1]
                 return
 
+    def place_question_block(self, question_x):
+        max_height = 5
+        height_counter = 0
+        for y in range(self.height):
+            if not self.is_collider(self.map[y][question_x]):
+                height_counter += 1
+            if height_counter == max_height:
+                self.map[y][question_x] = self.question_block
+                return
+
+    @staticmethod
+    def is_collider(value):
+        return value in \
+               [2, 7, 8, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+                1 + 22, 7 + 22, 14 + 22, 15 + 22, 16 + 22, 17 + 22, 18 + 22, 19 + 22, 20 + 22, 21 + 22, 22 + 22]
 
 
 the_map = Map()

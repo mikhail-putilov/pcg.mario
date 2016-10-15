@@ -21,3 +21,9 @@ def generate_tubes(the_map: Map):
     random_tube_xs = [60, 3]
     for random_tube_x in random_tube_xs:
         the_map.place_tube(random_tube_x)
+
+
+def generate_question_blocks(the_map: Map):
+    random_question_xs = [50, 3, 5, 8]
+    for random_question_x in random_question_xs:
+        the_map.place_question_block(random_question_x)
