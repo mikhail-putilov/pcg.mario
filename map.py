@@ -1,4 +1,5 @@
 from itertools import repeat
+
 from configuration import map_width, map_height
 
 
@@ -10,6 +11,7 @@ class Map(object):
         self.ground = 2
         self.question_block = 8
         self.map = []
+        self.coin = 6 + 22 * 5
         # fill background
         for i in range(self.height):
             self.map.append(list(repeat(self.background, self.width)))
@@ -144,20 +146,40 @@ class Map(object):
             if self.is_cave_placeable(cave_x1, cave_x2, y) and current_depth >= min_depth:
                 cave_starts_y = y
                 for x in range(cave_x1, cave_x2 + 1):
-                    self.map[y][x] = self.background
+                    self.map[y][x] = self.coin
 
         for y in range(way_up_y, cave_starts_y, -1):
-            self.map[y][way_up_x] = self.background
+            self.map[y][way_up_x] = self.coin
 
     def is_cave_placeable(self, cave_x1, cave_x2, y):
         for x in range(cave_x1, cave_x2 + 1):
-            if not self.is_collider(self.map[y-1][x]):
+            if not self.is_collider(self.map[y - 1][x]):
                 return False
             if not self.is_collider(self.map[y][x]):
                 return False
-            if not self.is_collider(self.map[y+1][x]):
+            if not self.is_collider(self.map[y + 1][x]):
                 return False
         return True
+
+    def place_bush(self, bush_x):
+        bush = [4, 5, 6]
+        current_x = bush_x
+        for current_x in range(current_x, current_x + 10):
+            ground_y = self.choose_ground_y(current_x)
+            if not (self.map[ground_y][current_x] == self.background and self.map[ground_y][current_x + 1] == self.background and self.map[ground_y][current_x + 2] == self.background):
+                continue
+            for i in range(3):
+                self.map[ground_y][current_x + i] = bush[i]
+            return
+
+    def choose_ground_y(self, x):
+        for y in range(self.height):
+            if not self.is_collider(self.map[y][x]) and not self.is_bush(self.map[y][x]):
+                return y
+        return None
+
+    def is_bush(self, param):
+        return param in [4, 5, 6]
 
 
 the_map = Map()

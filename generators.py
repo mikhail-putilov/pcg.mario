@@ -33,3 +33,9 @@ def generate_cave(the_map: Map):
     random_cave_xss = [(60, 70)]
     for random_cave_x1, random_cave_x2 in random_cave_xss:
         the_map.place_cave(random_cave_x1, random_cave_x2)
+
+
+def generate_bushes(the_map: Map):
+    random_bushes_xs = [40, 50, 70, 3, 4]
+    for random_bush_x in random_bushes_xs:
+        the_map.place_bush(random_bush_x)
