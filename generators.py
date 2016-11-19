@@ -75,12 +75,22 @@ def generate_question_blocks(the_map: Map):
 
 
 def generate_cave(the_map: Map):
-    random_cave_xss = [(60, 70)]
+    random_cave_xss = [(random.randint(40,50), random.randint(5, 10))]
     for random_cave_x1, random_cave_x2 in random_cave_xss:
         the_map.place_cave(random_cave_x1, random_cave_x2)
 
 
 def generate_bushes(the_map: Map):
-    random_bushes_xs = [40, 50, 70, 3, 4]
+    iterations = random.randint(5, 10)
+    random_bushes_xs = []
+    for i in range(iterations):
+        x = random.randint(4, 100)
+        number_of_try = 0
+        while {x, x + 1, x + 2, x + 3}.intersection(random_bushes_xs) and number_of_try != 10:
+            x = random.randint(4, 100)
+            number_of_try += 1
+        if number_of_try == 10:
+            break
+        random_bushes_xs.append(x)
     for random_bush_x in random_bushes_xs:
         the_map.place_bush(random_bush_x)
