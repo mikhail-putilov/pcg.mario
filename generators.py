@@ -41,7 +41,18 @@ def generate_clouds(the_map: Map):
 
 
 def generate_tubes(the_map: Map):
-    random_tube_xs = [60, 3]
+    iterations = random.randint(5, 20)
+    random_tube_xs = []
+    for i in range(iterations):
+        x = random.randint(4, 100)
+        number_of_try = 0
+        while {x, x + 1}.intersection(random_tube_xs) and number_of_try != 10:
+            x = random.randint(4, 100)
+            number_of_try += 1
+        if number_of_try == 10:
+            break
+        random_tube_xs.append(x)
+
     for random_tube_x in random_tube_xs:
         the_map.place_tube(random_tube_x)
 

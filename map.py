@@ -100,9 +100,10 @@ class Map(object):
         height_counter = 0
         max_height = 4
         for y in range(self.height):
+            llhs = self.map[y][tube_x-1]
             lhs = self.map[y][tube_x]
             rhs = self.map[y][tube_x + 1]
-            if not self.is_collider(lhs):
+            if not self.is_collider(llhs):
                 height_counter += 1
                 self.map[y][tube_x] = tube_body[0]
             if not self.is_collider(rhs):
