@@ -1,8 +1,20 @@
+import random
+
 from map import Map
 
 
 def generate_terrain(the_map: Map):
-    list_of_random_points = [(0, 1), (30, 5), (50, 7), (55, 2), (90, 4), (99, 1)]
+    iterations = random.randint(4, 6)
+    list_of_random_points = [] #[(0, 1), (30, 5), (50, 7), (55, 2), (90, 4), (99, 1)]
+    for i in range(iterations):
+        x = random.randint(3, 96)
+        while x in [tup[0] for tup in list_of_random_points]:
+            x = random.randint(3, 96)
+        y = random.randint(2, 7)
+        list_of_random_points.append((x, y))
+    list_of_random_points.append((0, 1))
+    list_of_random_points.append((99, 1))
+    list_of_random_points = sorted(list_of_random_points, key=lambda tup: tup[0])
     for left_point, right_point in zip(list_of_random_points[:-1], list_of_random_points[1:]):
         the_map.line(left_point, right_point, the_map.ground, fill_down=True)
 
