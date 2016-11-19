@@ -58,7 +58,18 @@ def generate_tubes(the_map: Map):
 
 
 def generate_question_blocks(the_map: Map):
-    random_question_xs = [50, 3, 5, 8]
+    iterations = random.randint(5, 10)
+    random_question_xs = []
+    for i in range(iterations):
+        x = random.randint(4, 100)
+        number_of_try = 0
+        while {x, x + 1, x+2, x+3}.intersection(random_question_xs) and number_of_try != 10:
+            x = random.randint(4, 100)
+            number_of_try += 1
+        if number_of_try == 10:
+            break
+        random_question_xs.append(x)
+
     for random_question_x in random_question_xs:
         the_map.place_question_block(random_question_x)
 

@@ -120,6 +120,8 @@ class Map(object):
             if not self.is_collider(self.map[y][question_x]):
                 height_counter += 1
             if height_counter == max_height:
+                if self.is_collider(self.map[y-1][question_x+1]) or self.is_collider(self.map[y-1][question_x-1]):
+                    return
                 self.map[y][question_x] = self.question_block
                 return
 
