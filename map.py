@@ -90,7 +90,7 @@ class Map(object):
             ]
         else:
             raise Exception('only red or blue are supported')
-        initial_height = 10
+        initial_height = random.choice([10, 11, 12])
         for y, cloud_row in enumerate(cloud):
             for x, cloud_val in enumerate(cloud_row):
                 self.map[y + initial_height][x + start_x] = cloud_val
@@ -104,7 +104,7 @@ class Map(object):
             llhs = self.map[y][tube_x - 1]
             lhs = self.map[y][tube_x]
             rhs = self.map[y][tube_x + 1]
-            if not self.is_collider(llhs) and not self.is_collider(lhs):
+            if not self.is_collider(llhs) or not self.is_collider(lhs):
                 height_counter += 1
                 self.map[y][tube_x] = tube_body[0]
             if not self.is_collider(rhs):
