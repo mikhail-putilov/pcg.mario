@@ -94,3 +94,19 @@ def generate_bushes(the_map: Map):
         random_bushes_xs.append(x)
     for random_bush_x in random_bushes_xs:
         the_map.place_bush(random_bush_x)
+
+
+def generate_eminems(the_map: Map):
+    iterations = random.randint(20, 30)
+    random_bushes_xs = []
+    for i in range(iterations):
+        x = random.randint(10, 100)
+        number_of_try = 0
+        while x in random_bushes_xs and number_of_try != 10:
+            x = random.randint(10, 100)
+            number_of_try += 1
+        if number_of_try == 10:
+            break
+        random_bushes_xs.append(x)
+    for random_bush_x in random_bushes_xs:
+        the_map.generate_eminem(random_bush_x)

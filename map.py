@@ -1,3 +1,4 @@
+import random
 from itertools import repeat
 
 from configuration import map_width, map_height
@@ -100,10 +101,10 @@ class Map(object):
         height_counter = 0
         max_height = 4
         for y in range(self.height):
-            llhs = self.map[y][tube_x-1]
+            llhs = self.map[y][tube_x - 1]
             lhs = self.map[y][tube_x]
             rhs = self.map[y][tube_x + 1]
-            if not self.is_collider(llhs):
+            if not self.is_collider(llhs) and not self.is_collider(lhs):
                 height_counter += 1
                 self.map[y][tube_x] = tube_body[0]
             if not self.is_collider(rhs):
@@ -120,7 +121,8 @@ class Map(object):
             if not self.is_collider(self.map[y][question_x]):
                 height_counter += 1
             if height_counter == max_height:
-                if self.is_collider(self.map[y-1][question_x+1]) or self.is_collider(self.map[y-1][question_x-1]):
+                if self.is_collider(self.map[y - 1][question_x + 1]) or self.is_collider(
+                        self.map[y - 1][question_x - 1]):
                     return
                 self.map[y][question_x] = self.question_block
                 return
@@ -169,7 +171,8 @@ class Map(object):
         current_x = bush_x
         for current_x in range(current_x, current_x + 10):
             ground_y = self.choose_ground_y(current_x)
-            if not (self.map[ground_y][current_x] == self.background and self.map[ground_y][current_x + 1] == self.background and self.map[ground_y][current_x + 2] == self.background):
+            if not (self.map[ground_y][current_x] == self.background and self.map[ground_y][
+                    current_x + 1] == self.background and self.map[ground_y][current_x + 2] == self.background):
                 continue
             for i in range(3):
                 self.map[ground_y][current_x + i] = bush[i]
@@ -183,6 +186,11 @@ class Map(object):
 
     def is_bush(self, param):
         return param in [4, 5, 6]
+
+    def generate_eminem(self, random_eminem_x):
+        if self.map[self.height-1][random_eminem_x] == 1:
+            self.map[self.height-1][random_eminem_x] = random.choice(["1-5", "1-6"])
+            print("eminem!")
 
 
 the_map = Map()
